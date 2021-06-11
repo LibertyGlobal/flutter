@@ -138,7 +138,7 @@ const Feature flutterLinuxDesktopFeature = Feature(
     enabledByDefault: false,
   ),
   beta: FeatureChannelSetting(
-    available: flutterNext,
+    available: true,
     enabledByDefault: false,
   ),
   stable: FeatureChannelSetting(
