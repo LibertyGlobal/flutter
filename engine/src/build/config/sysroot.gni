@@ -12,7 +12,7 @@ declare_args() {
 
   # Whether to use the default sysroot when building for Linux, if an explicit
   # sysroot isn't set.
-  use_default_linux_sysroot = true
+  use_default_linux_sysroot = false
 }
 
 if (current_toolchain == default_toolchain && target_sysroot != "") {

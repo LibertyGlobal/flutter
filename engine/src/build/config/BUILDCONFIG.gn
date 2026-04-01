@@ -522,7 +522,6 @@ import("//build/toolchain/custom/custom.gni")
 shlib_toolchain = false
 
 if (custom_toolchain != "") {
-  assert(custom_sysroot != "")
   assert(custom_target_triple != "")
   host_toolchain = "//build/toolchain/linux:clang_$host_cpu"
   set_default_toolchain("//build/toolchain/custom")

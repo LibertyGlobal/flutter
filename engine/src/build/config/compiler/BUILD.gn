@@ -196,52 +196,6 @@ config("compiler") {
 
     ldflags += common_mac_flags
   } else if (is_posix) {
-    # CPU architecture. We may or may not be doing a cross compile now, so for
-    # simplicity we always explicitly set the architecture.
-    if (current_cpu == "x64") {
-      cflags += [
-        "-m64",
-        "-march=x86-64",
-      ]
-      ldflags += [ "-m64" ]
-    } else if (current_cpu == "x86") {
-      cflags += [ "-m32" ]
-      ldflags += [ "-m32" ]
-      if (is_clang) {
-        cflags += [
-          # Align the stack on 16-byte boundaries, http://crbug.com/418554.
-          "-mstack-alignment=16",
-          "-mstackrealign",
-        ]
-      }
-    } else if (current_cpu == "arm") {
-      cflags += [
-        "-march=$arm_arch",
-        "-mfloat-abi=$arm_float_abi",
-      ]
-      if (arm_tune != "") {
-        cflags += [ "-mtune=$arm_tune" ]
-      }
-      if (arm_use_thumb) {
-        cflags += [ "-mthumb" ]
-      }
-      if (!is_clang) {
-        # Clang doesn't support these flags.
-        cflags += [
-          # The tree-sra optimization (scalar replacement for
-          # aggregates enabling subsequent optimizations) leads to
-          # invalid code generation when using the Android NDK's
-          # compiler (r5-r7). This can be verified using
-          # webkit_unit_tests' WTF.Checked_int8_t test.
-          "-fno-tree-sra",
-
-          # The following option is disabled to improve binary
-          # size and performance in gcc 4.9.
-          "-fno-caller-saves",
-        ]
-      }
-    }
-
     if (!is_android) {
       defines += [
         "_FILE_OFFSET_BITS=64",  # https://android.googlesource.com/platform/bionic/+/master/docs/32-bit-abi.md#32_bit-and
@@ -901,7 +855,7 @@ config("optimize") {
       cflags = [ "-O3" ]
     }
   } else {
-    cflags = [ "-O2" ] + common_optimize_on_cflags
+    cflags = [ "-Os" ] + common_optimize_on_cflags
   }
 
   lto_flags = []
