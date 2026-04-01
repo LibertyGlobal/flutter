@@ -29,6 +29,9 @@ declare_args() {
   # See [go/slimpeller-dashboard](https://github.com/orgs/flutter/projects/21)
   # for details.
   slimpeller = false
+
+  # Use wayland backend
+  use_wayland_backend = true
 }
 
 # feature_defines_list ---------------------------------------------------------

@@ -170,6 +170,12 @@ source_set("flutter_linux_sources") {
     "FLUTTER_ENGINE_NO_PROTOTYPES",
   ]
 
+  if (use_wayland_backend) {
+    defines += [
+      "DISALBE_X11_BACKEND",
+    ]
+  }
+
   deps = [
     "//flutter/fml",
     "//flutter/shell/platform/common:common_cpp_enums",
@@ -184,7 +190,15 @@ source_set("flutter_linux") {
   configs += [
     "//flutter/shell/platform/linux/config:gtk",
     "//flutter/shell/platform/linux/config:epoxy",
+    "//flutter/shell/platform/linux/config:egl",
+    "//flutter/shell/platform/linux/config:wayland-egl",
   ]
+
+  if (!use_wayland_backend) {
+    configs += [
+      "//flutter/shell/platform/linux/config:x11",
+    ]
+  }
 
   defines = [ "FLUTTER_ENGINE_NO_PROTOTYPES" ]
 
@@ -272,7 +286,14 @@ executable("flutter_linux_unittests") {
   configs += [
     "//flutter/shell/platform/linux/config:gtk",
     "//flutter/shell/platform/linux/config:epoxy",
+    "//flutter/shell/platform/linux/config:wayland-egl",
   ]
+
+  if (!use_wayland_backend) {
+    configs += [
+      "//flutter/shell/platform/linux/config:x11",
+    ]
+  }
 
   defines = [
     "FLUTTER_ENGINE_NO_PROTOTYPES",

@@ -7,6 +7,12 @@
 #include <atk/atk.h>
 #include <gtk/gtk-a11y.h>
 
+// ???
+#include <gdk/gdkwayland.h>
+#if defined(GDK_WINDOWING_X11) && !defined(DISALBE_X11_BACKEND)
+#include <gdk/gdkx.h>
+#endif
+
 #include <cstring>
 
 #include "flutter/common/constants.h"
